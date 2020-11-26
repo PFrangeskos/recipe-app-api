@@ -2,6 +2,7 @@ from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 
+
 class AdminSiteTests(TestCase):
 
     def setUp(self):
@@ -12,8 +13,8 @@ class AdminSiteTests(TestCase):
         )
         self.client.force_login(self.admin_user)
         self.user = get_user_model().objects.create_user(
-            email = 'pf@panicos.com',
-            password = 'test123',
+            email = 'p@panicos.com',
+            password = 'test123', 
             name = 'Test User Full Name'
         )
 
@@ -27,13 +28,13 @@ class AdminSiteTests(TestCase):
 
     def test_user_change_page(self):
         # test that the user edit page works.
-        url = reverse('admin:core_user_change',args=(self.user.id))
+        url = reverse('admin:core_user_change', args=[self.user.id])
         res = self.client.get(url)
 
         self.assertEqual(res.status_code, 200)
 
     def test_create_user_page(self):
         # test that the create user page works.
-        url = reverase('admin:core_user_add')
+        url = reverse('admin:core_user_add')
         res = self.client.get(url)
         self.assertEqual(res.status_code, 200)
