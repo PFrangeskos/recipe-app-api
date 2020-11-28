@@ -13,6 +13,7 @@ class ModelTests(TestCase):
 
     def test_create_user_with_email_successful(self):
         # Test creating a new user with an email is successful
+        # print('core.m.test_create_user_with_email_successful')
         email = 'p@test.com'
         password = 'testpass123'
         user = get_user_model().objects.create_user(
@@ -25,6 +26,7 @@ class ModelTests(TestCase):
 
     def test_new_user_normalized(self):
         # test the email for a new user is normalized.
+        # print('core.m.test_new_user_normalized')
         email = 'test@LONDON.COM'
         user = get_user_model().objects.create_user(email, 'testpass123')
 
@@ -32,10 +34,12 @@ class ModelTests(TestCase):
 
     def test_new_user_invalid_email(self):
         # test creating user with no email raises error
+        # print('core.m.test_new_user_invalid_email')
         with self.assertRaises(ValueError):
             get_user_model().objects.create_user(None, 'test123')
 
     def test_create_new_superuser(self):
+        # print('core.m.test_create_new_superuser')
         # test creating a new superuser
         user = get_user_model().objects.create_superuser(
             'p@gmail.com',
@@ -47,6 +51,7 @@ class ModelTests(TestCase):
 
     def test_tag_str(self):
         # test the tag rerpresentation.
+        # print('core.m.test_tag_str')
         tag = models.Tag.objects.create(
             user=sample_user(),
             name='Vegan'

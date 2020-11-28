@@ -23,6 +23,7 @@ class PublicUserApiTests(TestCase):
 
     def test_create_valid_user_success(self):
         # test creating user with valid payload is successful.
+        # print('user.test_create_valid_user_success')
         payload = {
             'email': 'test@londonappdev.com',
             'password': 'testpass',
@@ -37,6 +38,7 @@ class PublicUserApiTests(TestCase):
 
     def test_user_exists(self):
         # test creating a user that already exists fails.
+        # print('user.test_user_exists')
         payload = {
             'email': 'test@londonappdev.com',
             'password': 'testpass'
@@ -48,6 +50,7 @@ class PublicUserApiTests(TestCase):
 
     def test_password_too_short(self):
         # test that the password must be more than 5 characters.
+        # print('user.test_password_too_short')
         payload = {
             'email': 'test@londonappdev.com',
             'password': 'pw',
@@ -63,6 +66,7 @@ class PublicUserApiTests(TestCase):
 
     def test_create_token_for_user(self):
         # test that a token is created for the user.
+        # print('user.test_create_token_for_user')
         payload = {'email': 'test@londonappdev.com', 'password': 'testpass'}
         create_user(**payload)
         res = self.client.post(TOKEN_URL, payload)
@@ -72,6 +76,7 @@ class PublicUserApiTests(TestCase):
 
     def test_create_token_invalid_credentials(self):
         # test that token is not created if invalid credentials are given.
+        # print('user.test_create_token_invalid_credentials')
         create_user(email='test@londonappdev', password='testpass')
         payload = {'email': 'test@londonappdev.com', 'password': 'wrong'}
         res = self.client.post(TOKEN_URL, payload)
@@ -82,6 +87,7 @@ class PublicUserApiTests(TestCase):
     def test_create_token_no_user(self):
         # test that token is not created if user doesn't exists.
         # create_user(email='test@londonappdev', password='testpass')
+        # print('user.test_create_token_no_user')
         payload = {'email': 'test@londonappdev.com', 'password': 'testpass'}
         res = self.client.post(TOKEN_URL, payload)
 
@@ -90,13 +96,15 @@ class PublicUserApiTests(TestCase):
 
     def test_create_token_missing_fields(self):
         # test that email and password are required.
+        # print('user.test_create_token_missing_fields')
         res = self.client.post(TOKEN_URL, {'email': 'one', 'password': ''})
 
         self.assertNotIn('token', res.data)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
     def Χtest_retrieve_user_unauthorized(self):
-        """Test that authentication required for users"""
+        # Test that authentication required for users
+        # print('user.test_retrieve_user_unauthorized')
         res = self.client.get(ME_URL)
 
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
@@ -116,6 +124,7 @@ class PrivateUserApiTest(TestCase):
 
     def test_retrieve_profile_success(self):
         # test retrieving profile for logged in used.
+        # print('user.test_retrieve_profile_success')
         res = self.client.get(ME_URL)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
@@ -126,12 +135,14 @@ class PrivateUserApiTest(TestCase):
 
     def test_post_me_not_allowed(self):
         # test that POST is not allowed on the me url.
+        # print('user.test_post_me_not_allowed')
         res = self.client.post(ME_URL, {})
 
         self.assertEqual(res.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_update_user_profile(self):
         # test updating the user profile for authenticated user.
+        # print('user.test_update_user_profile')
         payload = {'name': 'new name', 'password': 'newpass'}
 
         res = self.client.patch(ME_URL, payload)
